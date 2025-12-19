@@ -1,38 +1,149 @@
+:root {
+    /* 北歐配色盤 */
+    --bg-color: #f0f2f5;       /* 淺灰背景，類似雲朵 */
+    --card-bg: #ffffff;        /* 純白卡片 */
+    --text-primary: #2d3436;   /* 深灰文字，比純黑柔和 */
+    --text-secondary: #636e72;
+    --cell-bg: #f7f9fc;        /* 格子底色 */
+    --cell-hover: #eef2f7;
+    
+    /* 莫蘭迪色調 */
+    --accent-x: #e17055;       /* 溫暖的赤陶色 (X) */
+    --accent-o: #00b894;       /* 清新的薄荷綠 (O) */
+    --btn-bg: #2d3436;
+    
+    /* 柔和陰影 */
+    --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 15px 45px rgba(0, 0, 0, 0.08);
+}
+
 body {
-    font-family: "Microsoft JhengHei", sans-serif;
+    font-family: 'Nunito', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* 中央卡片設計 */
+.card {
+    background-color: var(--card-bg);
+    padding: 40px;
+    border-radius: 30px; /* 大圓角 */
+    box-shadow: var(--shadow-soft);
     text-align: center;
-    background-color: #f2f2f2;
+    max-width: 360px;
+    width: 90%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
 }
 
 h1 {
-    color: #333;
+    font-weight: 900;
+    margin: 0;
+    font-size: 2rem;
+    letter-spacing: -1px; /* 緊縮字距，更現代 */
 }
 
+p {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* 狀態列 */
+.game-info {
+    margin: 25px 0;
+}
+
+.status {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    min-height: 1.5rem;
+}
+
+/* 棋盤 */
 .board {
-    width: 300px;
-    height: 300px;
-    margin: 20px auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 5px;
+    gap: 15px; /* 格子間距 */
+    margin-bottom: 30px;
 }
 
+/* 格子設計 - 圓潤方塊 */
 .cell {
-    background-color: white;
-    border: 2px solid #888;
-    font-size: 2em;
+    background-color: var(--cell-bg);
+    width: 90px;
+    height: 90px;
+    border-radius: 20px; /* 圓角矩形 */
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    font-weight: 900;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.2s ease;
+    color: transparent; /* 預設文字透明，靠 class 上色 */
 }
 
-.cell:hover {
-    background-color: #e0e0e0;
+.cell:hover:not(.taken) {
+    background-color: var(--cell-hover);
+    transform: scale(0.95); /* 點擊感 */
 }
 
-.controls {
-    margin-top: 10px;
+/* X 的樣式 */
+.cell.x {
+    color: var(--accent-x);
+    background-color: rgba(225, 112, 85, 0.1); /* 淡淡的背景色 */
+}
+
+/* O 的樣式 */
+.cell.o {
+    color: var(--accent-o);
+    background-color: rgba(0, 184, 148, 0.1);
+}
+
+.cell.taken {
+    cursor: default;
+}
+
+/* 按鈕 - 極簡膠囊型 */
+button {
+    background-color: var(--btn-bg);
+    color: white;
+    border: none;
+    padding: 12px 35px;
+    border-radius: 50px; /* 膠囊形狀 */
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(45, 52, 54, 0.2);
+}
+
+button:hover {
+    background-color: black;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* 手機版適配 */
+@media (max-width: 400px) {
+    .cell {
+        width: 70px;
+        height: 70px;
+        font-size: 2.5rem;
+    }
 }
